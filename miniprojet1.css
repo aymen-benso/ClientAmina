@@ -1,0 +1,188 @@
+/* Styles généraux */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f3bd;
+  color: #333;
+}
+
+/* Container and general layout */
+.container {
+  text-align: center;
+  margin: 20px;
+}
+
+/* Logo styling */
+.logo {
+  width: 20px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation styles */
+header ul {
+  list-style: none;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: #fff ;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+header ul li {
+  padding: 5px 5px;
+}
+
+header ul li a {
+  color: #333;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+header ul li a:hover {
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header ul li img.logo {
+  margin-right: 0px;
+}
+
+/* Main image styling */
+.site-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 20px;
+  animation: zoomInRotate 1s ease-out;
+}
+
+.site-image1 {
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 20px;
+  animation: zoomInRotate 1s ease-out;
+}
+
+/* Main content */
+main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.immobilier {
+  margin: 10px;
+  flex: 1 1 calc(25% - 20px);
+  box-sizing: border-box;
+}
+
+.immobilier img {
+  width: 80%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Contact section */
+contact {
+  background-color: #fff;
+  color: #333;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.contact1, .Service, .Produit {
+  margin: 10px;
+  width: 300px;
+}
+
+.contact1 h2, .Service p, .Produit p {
+  color: #ff9900;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 5px 0;
+}
+
+nav ul li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.facebook-button a {
+  color: #ff9900;
+  text-decoration: none;
+}
+
+.facebook-button a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+footer p {
+  margin: 0;
+}
+.immobilier img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: zoomInRotate 2s ease-out;
+}
+
+/* Animations */
+@keyframes zoomIn {
+  0% {
+      transform: scale(0.5);
+      opacity: 0;
+  }
+  100% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+@keyframes zoomInRotate {
+  0% {
+      transform: scale(0.5) rotate(-10deg);
+      opacity: 0;
+  }
+  100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+  }
+}

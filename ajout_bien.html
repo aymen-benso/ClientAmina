@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="ajout_bien.css">
+  <title>Ajouter un bien immobilier</title>
+</head>
+<body>
+  <h1>Ajouter un bien immobilier</h1>
+  <form action="inscrire.php" method="POST">
+    <label for="annonce">Numéro d'annonce :</label>
+    <input type="text" id="annonce" name="numéro_annonce" required>
+
+    <label for="Type">Type :</label>
+    <select name="Type" id="Type">
+      <option value="appartement">Appartements</option>
+      <option value="maison">Maisons</option>
+      <option value="terrain">Terrain</option>
+      <option value="local commercial">Local commercial</option>
+    </select>
+
+    <label for="wilaya">Wilaya :</label>
+    <select name="wilaya" id="wilaya">
+      <!-- Options dynamiques -->
+    </select>
+
+    <label for="commune">Commune :</label>
+    <select name="commune" id="commune">
+      <!-- Options dynamiques -->
+    </select>
+
+    <label for="titulé">Titre :</label>
+    <textarea id="titulé" name="titulé" required></textarea>
+
+    <label for="adresse">Adresse :</label>
+    <textarea id="adresse" name="adresse" required></textarea>
+
+    <label for="prix">Prix :</label>
+    <input type="number" id="prix" name="prix" required>
+
+    <label for="surface">Surface :</label>
+    <input type="number" id="surface" name="surface" required>
+
+    <label for="Description">Description :</label>
+    <textarea id="Description" name="Description" required></textarea>
+
+    <!-- Ajoutez ici le champ pour l'image si nécessaire -->
+
+    <input type="submit" value="Insérer" name="envoyer">
+  </form>
+</body>
+</html>

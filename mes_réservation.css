@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .reservations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .reservation {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+  }
+  
+  .reservation p {
+    margin: 5px 0;
+  }
