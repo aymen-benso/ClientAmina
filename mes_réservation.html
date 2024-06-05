@@ -3,13 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réservations</title>
+  <title>Annonces</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .annonces {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    input, button {
+      margin: 5px;
+      border: #ddd 1px solid;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      width: 40%;
+      background-color: #f1f1f1;
+    }
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    img {
+      width: 100%;
+    }
+    .reservation-form {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <h1>Liste des réservations</h1>
-  <div class="reservations">
+  <h1>Liste des annonces</h1>
+  <div class="annonces" id="annonces">
     
   </div>
+  <script>
+    fetch('http://0.0.0.0:8000/annoncebien/')
+      .then(response => response.json())
+      .then(data => {
+        const annoncesDiv = document.getElementById('annonces');
+        data.forEach((annonce, index) => {
+          const annonceDiv = document.createElement('div');
+          annonceDiv.className = 'card';
+          annonceDiv.innerHTML = `
+            <h2>${annonce.Tit}</h2>
+            <p>${annonce.Descr}</p>
+            <p>${annonce.AdrA}</p>
+            <p>Surface: ${annonce.Surf}</p>
+            <p>Prix: ${annonce.Prix}</p>
+            <p>Status: ${annonce.StatA}</p>
+            <img src="${annonce.Img}" alt="Image">
+            <button onclick="document.getElementById('reservation-form-${index}').style.display='block'">Réserver</button>
+            <form id="reservation-form-${index}" class="reservation-form" onsubmit="event.preventDefault(); createReservation(${annonce.IdAn}, this);">
+              <input type="date" name="DateDebut" required>
+              <input type="date" name="DateFin" required>
+              <input type="number" name="IdU" required>
+              <input type="text" name="StatR" required>
+              <button type="submit">Envoyer</button>
+            </form>
+          `;
+          annoncesDiv.appendChild(annonceDiv);
+        });
+      });
+
+    function createReservation(IdAn, form) {
+      const data = {
+        DateDebut: form.DateDebut.value,
+        DateFin: form.DateFin.value,
+        IdU: form.IdU.value,
+        IdAB: IdAn,
+      };
+      fetch('http://0.0.0.0:8000/reservation/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+        form.style.display = 'none';
+      });
+    }
+  </script>
 </body>
 </html>

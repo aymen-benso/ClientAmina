@@ -9,46 +9,80 @@
 </head>
 <body>
   <h1>Ajouter un bien immobilier</h1>
-  <form action="inscrire.php" method="POST">
-    <label for="annonce">Numéro d'annonce :</label>
-    <input type="text" id="annonce" name="numéro_annonce" required>
-
-    <label for="Type">Type :</label>
-    <select name="Type" id="Type">
-      <option value="appartement">Appartements</option>
-      <option value="maison">Maisons</option>
-      <option value="terrain">Terrain</option>
-      <option value="local commercial">Local commercial</option>
-    </select>
-
-    <label for="wilaya">Wilaya :</label>
-    <select name="wilaya" id="wilaya">
-      <!-- Options dynamiques -->
-    </select>
-
-    <label for="commune">Commune :</label>
-    <select name="commune" id="commune">
-      <!-- Options dynamiques -->
-    </select>
-
-    <label for="titulé">Titre :</label>
-    <textarea id="titulé" name="titulé" required></textarea>
-
-    <label for="adresse">Adresse :</label>
-    <textarea id="adresse" name="adresse" required></textarea>
-
-    <label for="prix">Prix :</label>
-    <input type="number" id="prix" name="prix" required>
-
-    <label for="surface">Surface :</label>
-    <input type="number" id="surface" name="surface" required>
-
-    <label for="Description">Description :</label>
-    <textarea id="Description" name="Description" required></textarea>
-
-    <!-- Ajoutez ici le champ pour l'image si nécessaire -->
-
-    <input type="submit" value="Insérer" name="envoyer">
+  <form action="http://0.0.0.0:8000/annoncebien/" method="POST">
+    <label for="IdAn">Numéro d'annonce :</label>
+    <input type="text" id="IdAn" name="IdAn" required>
+  
+    <label for="Tit">Titre :</label>
+    <textarea id="Tit" name="Tit" required></textarea>
+  
+    <label for="Descr">Description :</label>
+    <textarea id="Descr" name="Descr" required></textarea>
+  
+    <label for="AdrA">Adresse :</label>
+    <textarea id="AdrA" name="AdrA" required></textarea>
+  
+    <label for="Surf">Surface :</label>
+    <input type="number" id="Surf" name="Surf" required>
+  
+    <label for="Prix">Prix :</label>
+    <input type="number" id="Prix" name="Prix" required>
+  
+    <label for="StatA">Statut :</label>
+    <input type="text" id="StatA" name="StatA" required>
+  
+    <label for="Img">Image :</label>
+    <input type="text" id="Img" name="Img" required>
+  
+    <label for="IdU">Identifiant Utilisateur :</label>
+    <input type="number" id="IdU" name="IdU" required>
+  
+    <label for="IdCom">Identifiant Commentaire :</label>
+    <input type="number" id="IdCom" name="IdCom" required>
+  
+    <label for="IdCat">Identifiant Catégorie :</label>
+    <input type="number" id="IdCat" name="IdCat" required>
+  
+    <button type="submit">Ajouter</button>
   </form>
+  
+  <script>
+    async function fetchWilayas() {
+        const response = await fetch('http://0.0.0.0:8000/api/wilayas');
+        const wilayas = await response.json();
+        const wilayaSelect = document.getElementById('wilaya-select');
+        wilayas.forEach(wilaya => {
+            const option = document.createElement('option');
+            option.value = wilaya.IdWi;
+            option.textContent = wilaya.NomWi;
+            wilayaSelect.appendChild(option);
+        });
+    }
+
+    async function fetchCommunes(wilayaId) {
+        const response = await fetch(`http://0.0.0.0:8000/api/communes?wilaya_id=${wilayaId}`);
+        const communes = await response.json();
+        const communeSelect = document.getElementById('commune-select');
+        communeSelect.innerHTML = '<option value="">Select Commune</option>'; // Reset options
+        communes.forEach(commune => {
+            const option = document.createElement('option');
+            option.value = commune.IdCom;
+            option.textContent = commune.NomCom;
+            communeSelect.appendChild(option);
+        });
+    }
+
+    document.getElementById('wilaya-select').addEventListener('change', (event) => {
+        const wilayaId = event.target.value;
+        if (wilayaId) {
+            fetchCommunes(wilayaId);
+        } else {
+            document.getElementById('commune-select').innerHTML = '<option value="">Select Commune</option>';
+        }
+    });
+
+    // Fetch wilayas on page load
+    fetchWilayas();
+</script>
 </body>
 </html>

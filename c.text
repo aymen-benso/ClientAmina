@@ -1,6 +1,3 @@
-
-
-
 CREATE TABLE Commune (
     IdCom INT AUTO_INCREMENT PRIMARY KEY,
     NomCom VARCHAR(255),
@@ -1446,10 +1443,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Remila', 40),
 ('Tamza', 40),
 ('Taouzient', 40),
-('Yabous', 40);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Yabous', 40),
 ('Souk Ahras', 41),
 ('Sedrata', 41),
 ('Hanancha', 41),
@@ -1475,9 +1469,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Khemissa', 41),
 ('Oued Keberit', 41),
 ('Terraguelt', 41),
-('Zouabi', 41);
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Zouabi', 41),
 ('Tipaza', 42),
 ('Menaceur', 42),
 ('Larhat', 42),
@@ -1505,11 +1497,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Attatba', 42),
 ('Sidi Semiane', 42),
 ('Beni Milleuk', 42),
-('Hadjeret Ennous', 42);
-
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Hadjeret Ennous', 42),
 ('Ahmed Rachedi', 43),
 ('Aïn Beida Harriche', 43),
 ('Aïn Mellouk', 43),
@@ -1541,13 +1529,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Tessala Lemtaï', 43),
 ('Tiberguent', 43),
 ('Yahia Beni Guecha', 43),
-('Zeghaia', 43);
-
-
-
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Zeghaia', 43),
 ('Aïn Benian', 44),
 ('Aïn Bouyahia', 44),
 ('Aïn Defla', 44),
@@ -1583,12 +1565,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Tacheta Zougagha', 44),
 ('Tarik Ibn Ziad', 44),
 ('Tiberkanine', 44),
-('Zeddine', 44);
-
-
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Zeddine', 44),
 ('Naâma', 45),
 ('Mecheria', 45),
 ('Aïn Sefra', 45),
@@ -1600,10 +1577,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Aïn Ben Khelil', 45),
 ('Makman Ben Amer', 45),
 ('Kasdir', 45),
-('El Biod', 45);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('El Biod', 45),
 ('Aghlal', 46),
 ('Aïn El Arbaa', 46),
 ('Aïn Kihal', 46),
@@ -1631,10 +1605,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Sidi Ouriache', 46),
 ('Sidi Safi', 46),
 ('Tamzoura', 46),
-('Terga', 46);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Terga', 46),
 ('Berriane', 47),
 ('Bounoura', 47),
 ('Dhayet Bendhahoua', 47),
@@ -1644,10 +1615,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Mansoura', 47),
 ('Metlili', 47),
 ('Sebseb', 47),
-('Zelfana', 47);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Zelfana', 47),
 ('Aïn Rahma', 48),
 ('Aïn Tarek', 48),
 ('‘Aarch Meknassa', 48),
@@ -1686,10 +1654,7 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Sidi Saada', 48),
 ('Souk El Had', 48),
 ('Yellel', 48),
-('Zemmora', 48);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Zemmora', 48),
 ('Aougrout', 49),
 ('Charouine', 49),
 ('Deldoul', 49),
@@ -1699,27 +1664,15 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Ouled Saïd', 49),
 ('Talmine', 49),
 ('Timimoun', 49),
-('Tinerkouk', 49);
-
-
-
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Tinerkouk', 49),
 ('Bordj Badji Mokhtar', 50),
-('Timiaouine', 50);
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Timiaouine', 50),
 ('Besbes', 51),
 ('Ech Chaïba', 51),
 ('Doucen', 51),
 ('Ouled Djellal', 51),
 ('Sidi Khaled', 51),
-('Ras El Miaad', 51);
-
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Ras El Miaad', 51),
 ('Béni Abbès', 52),
 ('Beni Ikhlef', 52),
 ('El Ouata', 52),
@@ -1729,23 +1682,12 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Oulad khodeir', 52),
 ('Tabelbala', 52),
 ('Tamtert', 52),
-('Timoudi', 52);
-
-
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Timoudi', 52),
 ('In Salah', 53),
 ('Foggaret Ezzaouia', 53),
-('In Ghar', 53);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('In Ghar', 53),
 ('In Guezzam', 54),
-('Tin Zaouatine', 54);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Tin Zaouatine', 54),
 ('Benaceur', 55),
 ('Blidet Amor', 55),
 ('El Allia', 55),
@@ -1758,15 +1700,9 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Temacine', 55),
 ('Tebesbest', 55),
 ('Touggourt', 55),
-('Zaouia El Abidia', 55);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Zaouia El Abidia', 55),
 ('Djanet', 56),
-('Bordj El Haouas', 56);
-
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
+('Bordj El Haouas', 56),
 ('Djamaa', 57),
 ('El M\'Ghair', 57),
 ('Merara', 57),
@@ -1776,11 +1712,6 @@ INSERT INTO Commune (NomCom, IdWi) VALUES
 ('Still', 57),
 ('Tendla', 57);
 
-
-INSERT INTO Commune (NomCom, IdWi) VALUES
-('El Menia', 58),
-('Hassi Fehal', 58),
-('Hassi Gara', 58);
 
 
 
