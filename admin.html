@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .half {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .card {
+            background-color: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .card p {
+            margin: 0 0 5px;
+            color: #666;
+        }
+
+        .card button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .card button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="half">
+            <h2>Utilisateurs</h2>
+            <button class="button" onclick="fetchUtilisateurs()">Afficher les Utilisateurs</button>
+            <div id="utilisateursList"></div>
+        </div>
+        <div class="half">
+            <h2>Annonces</h2>
+            <button class="button" onclick="fetchAnnonces()">Afficher les Annonces</button>
+            <div id="annoncesList"></div>
+        </div>
+    </div>
+
+    <script>
+        function fetchUtilisateurs() {
+            fetch('http://localhost:8000/lesutilisateurs/', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                const utilisateursList = document.getElementById('utilisateursList');
+                utilisateursList.innerHTML = ''; // Clear the list
+                data.forEach(utilisateur => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.innerHTML = `
+                        <h3>${utilisateur.NomU} ${utilisateur.PrenomU}</h3>
+                        <p>Email: ${utilisateur.email}</p>
+                        <p>Tel: ${utilisateur.Tel}</p>
+                        <button onclick="supprimerUtilisateur(${utilisateur.IdU})">Supprimer</button>
+                    `;
+                    utilisateursList.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function fetchAnnonces() {
+            fetch('http://localhost:8000/annoncebien/')
+            .then(response => response.json())
+            .then(data => {
+                const annoncesList = document.getElementById('annoncesList');
+                annoncesList.innerHTML = ''; // Clear the list
+                data.forEach(annonce => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.innerHTML = `
+                        <h3>${annonce.Tit}</h3>
+                        <p>Description: ${annonce.Descr}</p>
+                        <p>Location: ${annonce.AdrA}</p>
+                        <button onclick="supprimerAnnonce(${annonce.IdAn})">Supprimer</button>
+                    `;
+                    annoncesList.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function supprimerUtilisateur(IdU) {
+            fetch('http://localhost:8000/supprimerutilisateur/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    IdU: IdU
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchUtilisateurs(); // Refresh the list
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function supprimerAnnonce(IdAn) {
+            fetch('http://localhost:8000/supprimerannonce/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    IdAn: IdAn
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchAnnonces(); // Refresh the list
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

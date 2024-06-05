@@ -34,19 +34,39 @@
     <label for="Img">Image :</label>
     <input type="text" id="Img" name="Img" required>
   
-    <label for="IdU">Identifiant Utilisateur :</label>
-    <input type="number" id="IdU" name="IdU" required>
-  
-    <label for="IdCom">Identifiant Commentaire :</label>
+
+    <input type="number" id="IdU" name="IdU" required style="display: none;">  
+    
+    <label for="IdCom">ID Commune :</label>
     <input type="number" id="IdCom" name="IdCom" required>
   
-    <label for="IdCat">Identifiant Catégorie :</label>
+    <label for="IdCat">Catégorie :</label>
+    <p>1- Appartement 2- Maison 3- Villa</p>
     <input type="number" id="IdCat" name="IdCat" required>
   
     <button type="submit">Ajouter</button>
   </form>
   
   <script>
+        // Function to get cookie value by name
+        function getCookie(cookieName) {
+        const cookies = document.cookie.split('; ');
+        for (const cookie of cookies) {
+            const [name, value] = cookie.split('=');
+            if (name === cookieName) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    // Get IdU from cookie
+    var IdU = getCookie('IdU');
+
+    // Set IdU value to the input field
+    if (IdU) {
+        document.getElementById('IdU').value = IdU;
+    }
     async function fetchWilayas() {
         const response = await fetch('http://0.0.0.0:8000/api/wilayas');
         const wilayas = await response.json();

@@ -6,7 +6,6 @@ from pydantic import BaseModel
 from fastapi import Form
 from fastapi.responses import RedirectResponse
 from fastapi.requests import Request
-from starlette.middleware.sessions import SessionMiddleware
 
 
 
@@ -25,7 +24,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(SessionMiddleware, secret_key="123")
 
 DATABASE = './db.db'  # Replace with your actual database file
 
@@ -39,6 +37,7 @@ class Administrateur(BaseModel):
 from typing import Optional
 
 class Utilisateur(BaseModel):
+    IdU: Optional[int] = None
     NomU: str
     NomPrenomU: str
     email: str
@@ -63,7 +62,7 @@ class Reservation(BaseModel):
     DateDebut: str
     DateFin: str
     IdU: int
-    IdAB: int
+    IdAn: int
 
 class Catégorie(BaseModel):
     Nom: str
@@ -76,12 +75,14 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+
 @app.get("/api/wilayas")
 async def get_wilayas():
     conn = get_db_connection()
     wilayas = conn.execute('SELECT * FROM Wilaya').fetchall()
     conn.close()
     return JSONResponse([dict(ix) for ix in wilayas])
+
 
 @app.get("/api/communes")
 async def get_communes(wilaya_id: int = Query(None, description="ID of the Wilaya to filter communes")):
@@ -111,15 +112,21 @@ async def create_annoncebien(IdAn: int = Form(...), Tit: str = Form(...), Descr:
 
     return {"message": "AnnonceBien created successfully"}
 
+
 @app.post("/utilisateur/")
 async def create_utilisateur(NomU: str = Form(...), NomPrenomU: str = Form(...), email: str = Form(...), MdpU: str = Form(...), Tel: str = Form(...), AdrU: str = Form(...)):
     utilisateur = Utilisateur(NomU=NomU, NomPrenomU=NomPrenomU, email=email, MdpU=MdpU, Tel=Tel, AdrU=AdrU)
+    print(utilisateur)
+
     conn = get_db_connection()
     conn.execute(
-        "INSERT INTO Utilisateur (NomU,MdpU,email,NomPrenomU,Tel,AdrU)  values (?,?,?,?,?,?)",
+        "INSERT INTO Utilisateur (NomU, MdpU, email, NomPrenomU,Tel,AdrU)  VALUES (?, ?, ?, ?, ?, ?)",
         (utilisateur.NomU,utilisateur.MdpU,utilisateur.email,utilisateur.NomPrenomU,utilisateur.Tel,utilisateur.AdrU)
     )
-    return RedirectResponse(url='/login.html', status_code=303)
+    conn.commit()
+    conn.close()
+    return RedirectResponse(url='http://127.0.0.1:5500/login.html', status_code=303)
+
 
 @app.post("/annoncebien/")
 async def create_annoncebien(annoncebien: AnnonceBien):
@@ -130,14 +137,31 @@ async def create_annoncebien(annoncebien: AnnonceBien):
     conn.close()
     return JSONResponse({"message": "AnnonceBien created successfully"})
 
+
 @app.post("/reservation/")
 async def create_reservation(reservation: Reservation):
+    try:
+        conn = get_db_connection()
+        conn.execute('INSERT INTO Réservation1 (DateDebut, DateFin, IdU, IdAn) VALUES (?, ?, ?, ?)',
+                     (reservation.DateDebut, reservation.DateFin, reservation.IdU, reservation.IdAn))
+        conn.commit()
+        conn.close()
+        return JSONResponse({"message": "Réservation created successfully"}, status_code=201)
+    except Exception as e:
+        return JSONResponse({"message": str(e)}, status_code=500)
+
+@app.get("/mesreservations/")
+async def get_mesreservations(IdU: int = Query(None, description="ID of the User to filter reservations")):
     conn = get_db_connection()
-    conn.execute('INSERT INTO Réservation (DateDebut, DateFin, IdU, IdAB) VALUES (?, ?, ?, ?)',
-                 (reservation.DateDebut, reservation.DateFin, reservation.IdU, reservation.IdAB))
-    conn.commit()
-    conn.close()
-    return JSONResponse({"message": "Réservation created successfully"})
+    if IdU is not None:
+        reservations = conn.execute('SELECT * FROM Réservation1 WHERE IdU = ?', (IdU,)).fetchall()
+        conn.close()
+        if not reservations:
+            raise HTTPException(status_code=404, detail="No reservations found for this IdU")
+        return JSONResponse([dict(ix) for ix in reservations])
+    else:
+        conn.close()
+        raise HTTPException(status_code=400, detail="IdU is required")
 
 @app.post("/categorie/")
 async def create_categorie(categorie: Catégorie):
@@ -148,6 +172,20 @@ async def create_categorie(categorie: Catégorie):
     conn.close()
     return JSONResponse({"message": "Catégorie created successfully"})
 
+
+
+@app.post("/login/")
+async def login(request: Request, email: str = Form(...), MdpU: str = Form(...)):
+    conn = get_db_connection()
+    utilisateur = conn.execute('SELECT * FROM Utilisateur WHERE email = ? AND MdpU = ?', (email, MdpU)).fetchone()
+    print(utilisateur)
+    conn.close()
+    if utilisateur:
+        utilisateur = dict(utilisateur)
+        return JSONResponse({"message": "Login successful" , "user": utilisateur}, status_code=200)
+    else:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
 @app.get("/annoncebien/")
 async def get_annoncebiens():
     conn = get_db_connection()
@@ -155,16 +193,30 @@ async def get_annoncebiens():
     conn.close()
     return JSONResponse([dict(ix) for ix in annoncebiens])
 
-@app.post("/login/")
-async def login(request: Request, email: str = Form(...), MdpU: str = Form(...)):
+@app.post("/lesutilisateurs/")
+async def get_lesutilisateurs():
     conn = get_db_connection()
-    utilisateur = conn.execute('SELECT * FROM Utilisateur WHERE email = ? AND MdpU = ?', (email, MdpU)).fetchone()
+    lesutilisateurs = conn.execute('SELECT * FROM Utilisateur').fetchall()
     conn.close()
-    if utilisateur:
-        request.session["utilisateur"] = dict(utilisateur)
-        return RedirectResponse(url='/index.html', status_code=303)
-    else:
-        return RedirectResponse(url='/login.html', status_code=303)
+    return JSONResponse([dict(ix) for ix in lesutilisateurs])
+
+@app.post("/supprimerutilisateur/")
+async def supprimer_utilisateur(IdU: int = Form(...)):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM Utilisateur WHERE IdU = ?', (IdU,))
+    conn.commit()
+    conn.close()
+    return JSONResponse({"message": "Utilisateur supprimé avec succès"})
+
+@app.post("/supprimerannonce/")
+async def supprimer_annonce(IdAn: int = Form(...)):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM AnnonceBien WHERE IdAn = ?', (IdAn,))
+    conn.commit()
+    conn.close()
+    return JSONResponse({"message": "Annonce supprimée avec succès"})
+
+
 
 if __name__ == '__main__':
     import uvicorn

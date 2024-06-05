@@ -45,6 +45,10 @@
     
   </div>
   <script>
+
+      var cookie = document.cookie.split('; ').find(row => row.startsWith('IdU'))
+      var IdU = cookie ? cookie.split('=')[1] : null; 
+      console.log(cookie, IdU);
     fetch('http://0.0.0.0:8000/annoncebien/')
       .then(response => response.json())
       .then(data => {
@@ -53,6 +57,7 @@
           const annonceDiv = document.createElement('div');
           annonceDiv.className = 'card';
           annonceDiv.innerHTML = `
+            <p id="IdAn">${annonce.IdAn}</p>
             <h2>${annonce.Tit}</h2>
             <p>${annonce.Descr}</p>
             <p>${annonce.AdrA}</p>
@@ -64,8 +69,6 @@
             <form id="reservation-form-${index}" class="reservation-form" onsubmit="event.preventDefault(); createReservation(${annonce.IdAn}, this);">
               <input type="date" name="DateDebut" required>
               <input type="date" name="DateFin" required>
-              <input type="number" name="IdU" required>
-              <input type="text" name="StatR" required>
               <button type="submit">Envoyer</button>
             </form>
           `;
@@ -74,12 +77,18 @@
       });
 
     function createReservation(IdAn, form) {
+
+      if (!IdU) {
+        alert('Vous devez être connecté pour réserver');
+        return;
+      }
       const data = {
         DateDebut: form.DateDebut.value,
         DateFin: form.DateFin.value,
-        IdU: form.IdU.value,
-        IdAB: IdAn,
+        IdU: IdU,
+        IdAn: form.parentElement.querySelector('#IdAn').textContent,
       };
+      console.log(data);
       fetch('http://0.0.0.0:8000/reservation/', {
         method: 'POST',
         headers: {

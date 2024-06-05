@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background-color: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .card p {
+            margin: 0 0 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="reservationList"></div>
+    </div>
+
+    <script>
+        // Replace 'userId' with the actual user ID from the cookies
+        const userId = document.cookie.split('; ').find(row => row.startsWith('IdU=')).split('=')[1];
+
+        // Replace this with your API endpoint to fetch the reservation data
+        const apiUrl = `http://localhost:8000/mesreservations/?IdU=${userId}`;
+
+        // Fetch the reservation data from the API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const reservationList = document.getElementById('reservationList');
+
+                // Loop through the reservation data and create a card for each reservation
+                data.forEach(reservation => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    // Customize the card content based on your reservation data
+                    card.innerHTML = `
+                        <h3>${reservation.DateDebut}</h3>
+                        <p>${reservation.DateFin}</p>
+                        <p>Date: ${reservation.IdAn}</p>
+                        <p>Location: ${reservation.IdU}</p>
+                    `;
+
+                    reservationList.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>

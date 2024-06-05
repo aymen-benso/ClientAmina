@@ -164,6 +164,58 @@ footer p {
   animation: zoomInRotate 2s ease-out;
 }
 
+#profile-card {
+  background-color: #f8f9fa;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px 0;
+  display: none;
+  width: 300px;
+  max-width: 100%;
+}
+
+#profile-card p {
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+#profile-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#profile-link {
+  color: #333;
+  text-decoration: none;
+}
+
+#liProf {
+  padding: 10px 20px;
+  margin-left: 5px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px #0000001a;
+  text-decoration: none;
+  width: 10%;
+
+}
+
+#liProf:hover {
+  background-color: #faf6054b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#liProf img {
+  width: 20px;
+  height: auto;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+
 /* Animations */
 @keyframes zoomIn {
   0% {

@@ -6,25 +6,40 @@
     <link rel="stylesheet" href="miniprojet1.css">
 </head>
 
-       <header> 
-            <ul>
-                <li><img src="logo.png" alt="Logo du site" id="img" class="logo"></li>
-                <li><a href="#">Accueil</a></li>  
-                <li><a href="ajout_bien.html">ajout_bien</a></li>
-                <li><a href="demande_conge.html">demande_de_congé</a></li>
-                <li><a href="salaire.html">Espace_salarié</a></li>
-                <li><a href="fiche_salarié.html">fiche_salarié</a></li>
-                <li><a href="abssance.html">Absences</a></li> 
-                <li><a href="Prix.html">Prix</a></li>
-                <li><a href="reponses.html">reponses_demandes</a></li>
-                <li><a href="demande_agent.html">demande_agent</a></li>
-            </ul>
-        </header>
+<header> 
+    <ul>
+        <li><img src="logo.png" alt="Logo du site" id="img" class="logo"></li>
+        <li><a href="#">Accueil</a></li>  
+        <li><a href="ajout_bien.html">ajout_bien</a></li>
+        <li><a href="mes_réservations.html">mes_réservation</a></li>
+        <li><a href="annonces.html">demande_réservation</a></li>
+        <li><a href="annonces.html">mes_annonces</a></li>
+        <li><a href=".html"></a></li>
+        <li><a href=".html"></a></li>
+        <li><a href=".html"></a></li>
+         </ul>
+</header>
         
 <body>
 
        
+    <li id="liProf">
+        <img src="profile.png" alt="Profile" id="profile-image">    
+        <a href="#" id="profile-link">Profile</a>
+    
+    </li>
+
+    <div id="profile-card" class="card" style="display: none;">
+        <p id="email"></p>
+        <p id="MdpU"></p>
+        <p id="NomU"></p>
+        <p id="NomPrenomU"></p>
+        <p id="Tel"></p>
+        <p id="AdrU"></p>
+        <p id="IdU"></p>
     </div>
+
+
     
         <img src="section6.png" alt="Image du site" class="site-image1">
         <img src="section1.jpg" alt="Image du site" class="site-image">
@@ -81,7 +96,29 @@
     <footer>
         <p>&copy;2003-2024  site imobéilière.tous droit réservés|L'Application Web De Tous les types des demandes </p>
     </footer>
-
+    <script>
+        document.getElementById('profile-link').addEventListener('click', function(event) {
+            event.preventDefault();
+    
+            var email = document.cookie.split('; ').find(row => row.startsWith('email=')).split('=')[1];
+            var MdpU = document.cookie.split('; ').find(row => row.startsWith('MdpU=')).split('=')[1];
+            var NomU = document.cookie.split('; ').find(row => row.startsWith('NomU=')).split('=')[1];
+            var NomPrenomU = document.cookie.split('; ').find(row => row.startsWith('NomPrenomU=')).split('=')[1];
+            var Tel = document.cookie.split('; ').find(row => row.startsWith('Tel=')).split('=')[1];
+            var AdrU = document.cookie.split('; ').find(row => row.startsWith('AdrU=')).split('=')[1];
+            var IdU = document.cookie.split('; ').find(row => row.startsWith('IdU=')).split('=')[1];
+    
+            document.getElementById('email').textContent = 'Email: ' + email;
+            document.getElementById('MdpU').textContent = 'MdpU: ' + MdpU;
+            document.getElementById('NomU').textContent = 'NomU: ' + NomU;
+            document.getElementById('NomPrenomU').textContent = 'NomPrenomU: ' + NomPrenomU;
+            document.getElementById('Tel').textContent = 'Tel: ' + Tel;
+            document.getElementById('AdrU').textContent = 'AdrU: ' + AdrU;
+            document.getElementById('IdU').textContent = 'IdU: ' + IdU;
+    
+            document.getElementById('profile-card').style.display = 'block';
+        });
+        </script>
 </body>
 </html>
 
